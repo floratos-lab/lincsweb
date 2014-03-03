@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta charset="utf-8">
+    <title>Lincs Query</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">   
+    <link href="css/lincs.css" rel="stylesheet">
+   
+     
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  
+ 
+  </head>
+
+ <body  onload="initData();">
+    
+    <form name="Demo" action="" method="post">
+    
+        <br/>
+        <table align="center">
+           
+		<tr >
+		    <td><small>Query Type:</small> </td>
+			 
+            <td>
+					&nbsp;&nbsp;&nbsp;
+					 
+
+						<input type="radio" name="queryType"
+							value="Experimental" CHECKED="checked" onchange="queryTypeChange();" />
+						&nbsp;&nbsp;<small>Experimental</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					 
+						<input type="radio" name="queryType"
+							value="Computational" onchange="queryTypeChange();"/>
+						&nbsp;&nbsp;<small>Computational</small>
+					 
+				</td>
+            
+		</tr>		  
+		 
+
+	  </table>
+	  
+        <table align="center" style="width: 90%">
+                        <tr><td/><td/><td align="left" valign="bottom"><small>Drug1: </small></td></tr>
+                        <tr>
+                          <td align="left"><small>Tissue Type </small></td>
+                          <td align="left"><small>Cell Line </small></td>
+                          <td align="left" valign="bottom"><input id="textbox" type="text" style="width: 120px; height: 16px; font-size: 15px" placeholder="Type to filter"/></td>
+                          <td align="left"><small>Drug2 </small></td>
+                          <td id="assayTypeText" align="left"><small>Assay Type </small></td>
+                          <td id="synergyMeasurementText" align="left"><small>Synergy Measurement</small></td>
+                           <td id="similarityAlgorithmText" align="left"><small>Similarity Algorithm</small></td>
+                       </tr>
+            
+		 
+		<tr>
+			<td ><select id="tissueTypes" name="tissueTypes"  style="width: 150px" size="3" onchange="tissueTypesChange();" multiple></select></td>
+            <td><select id="cellLines" name="cellLines"  style="width: 150px"  size="3" onchange="cellLineChange();" multiple></select></td>
+            <td><select id="drug1List" name="drug1List" style="width: 150px"  size="3" onchange="drug1Change();" multiple></select></td>
+            <td><select id="drug2List" name="drug2List"  style="width: 150px"  size="3" multiple></select></td>
+            <td id="assayTypesTd"><select id="assayTypes" name="assayTypes" style="width: 150px"  size="3" multiple></select></td>
+            <td id="synergyMeasurementTypesTd"><select id="synergyMeasurementTypes" name="synergyMeasurememtTypes" style="width: 150px" size="3" multiple></select></td>
+             <td id="similarityAlgorithmsTd"><select id="similarityAlgorithms" name="similarityAlgorithms" style="width: 150px" size="3" multiple></select></td>
+			
+		</tr>
+		 
+		
+
+	  </table>
+	    <table align="center">
+           
+		 <tr>   
+				<td valign="top"><input id="checkboxMaxResult" type="checkbox" name="maxResult " /></td>
+				<td valign="top">&nbsp;<small>maxResult</small>&nbsp;</td>
+				<td valign="top"><input id="textboxMaxResult" type="text" style="width: 120px;  height: 16px; font-size: 15px" value="10"/>&nbsp;</td>		 
+				 
+				<td valign="top"><input type="button" value="search" onclick="getLincsQueryData();" />&nbsp;</td> 
+				<td valign="top"><input type="button" value="reset" onclick="queryTypeChange();" />&nbsp;&nbsp;</td> 
+				<td valign="baseline"><input id="checkboxColorgradient" type="checkbox" name="maxResult " />&nbsp;<small>Color gradient for Score</td>
+				 
+		 </tr>
+
+	  </table>
+	  
+	     <table class="sortable" id="experimentalQuery" align="center" width="90%">
+               <thead>           
+                        <tr>
+                          <th align="left"><small>Tissue Type</small></th>
+                          <th align="left"><small>Cell Line</small></th>
+                          <th align="left"><small>Drug1</small></th>
+                          <th align="left"><small>Drug2</small></th>
+                          <th align="left"><small>Assay Type</small></th>
+                          <th align="left"><small>Synergy Measurement</small></th>
+                          <th align="left"><small>Score</small></th>
+                          <th align="left"><small>Score Error</small></th>
+                          
+                       </tr>
+            
+		 
+		</thead>
+	    <tbody></tbody>
+
+	  </table>
+	  
+	   <table type="hidden" class="sortable" id="computationalQuery" align="center" width="90%">
+               <thead>           
+                        <tr>
+                          <th align="left"><small>Tissue Type</small></th>
+                          <th align="left"><small>Cell Line</small></th>
+                          <th align="left"><small>Drug1</small></th>
+                          <th align="left"><small>Drug2</small></th>                          
+                          <th align="left"><small>Similarity Algorithm</small></th>
+                          <th align="left"><small>Score</small></th>
+                          <th align="left"><small>P-value</small></th>
+                          
+                       </tr>
+            
+		 
+		</thead>
+		 <tbody>
+		 </tbody>
+		 
+		
+
+	  </table>
+    
+         
+    </form>     
+   
+    
+   
+    <script src="js/underscore.js"></script>
+    <script src="js/json2.js"></script>
+   
+    <script src="js/lincs.js"></script>
+    <script src="js/sorttable.js"></script>
+ 
+
+
+</body>  
+ 
+</html>
