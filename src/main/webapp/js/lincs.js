@@ -73,10 +73,9 @@ jQuery.fn.filterByText = function(textbox, selectSingleMatch) {
 };
 
 function initData() {
-	
+
 	checkQueryType();
 	getLincsInfo();
-	
 
 }
 
@@ -340,7 +339,18 @@ function drug1Change() {
 }
 
 function getLincsQueryData() {
+	var cookieValue = $.cookie("agreeLincsLicense");
+	if (cookieValue != 1) {
+		var w = 380;
+		var h = 310;
+		var left = Number((screen.width / 2) - (w / 2));
+		var tops = Number((screen.height / 2) - (h / 2));
+		var childWindow = window.open('license.jsp', 'win2',
+				'resizable=yes, width=' + w + ', height=' + h + ', top=' + tops
+						+ ', left=' + left);
+		return false;
 
+	}
 	var queryType = $('input[name=queryType]:checked').val();
 
 	var tissueTypes = [];
@@ -382,13 +392,13 @@ function getLincsQueryData() {
 	if ($('#checkboxMaxResult').is(":checked")) {
 		rowLimit = $('#textboxMaxResult').val();
 	}
-	
-	if (queryType != "Experimental" )
-	{	 
-		if ((drug1s.length == 0 || drug1s.toString().indexOf("All") != -1) && (drug2s.length == 0 || drug2s.toString().indexOf("All") != -1)) {
-	         
-		  alert("Please select at least one drug constraint, multiple drugs can be selected.");
-		  return false;
+
+	if (queryType != "Experimental") {
+		if ((drug1s.length == 0 || drug1s.toString().indexOf("All") != -1)
+				&& (drug2s.length == 0 || drug2s.toString().indexOf("All") != -1)) {
+
+			alert("Please select at least one drug constraint, multiple drugs can be selected.");
+			return false;
 		}
 	}
 
@@ -452,7 +462,7 @@ function getLincsQueryData() {
 					line += '<td style="width: 120px"  class="border"><small>'
 							+ aData.score + '</small></td>';
 					line += '<td style="width: 120px"  class="border"><small>'
-							+ aData.pvalue + '</small></td>';				 
+							+ aData.pvalue + '</small></td>';
 					line = '<tr style="width: 120px"  class="border"><small>'
 							+ line + '</small></tr>';
 					$('#computationalQuery tbody').append(line);
@@ -464,6 +474,67 @@ function getLincsQueryData() {
 		error : function(x) {
 			alert("error: " + x);
 		}
-	});   
+	});
 
+}
+
+function exportToCsv() {
+	var queryType = $('input[name=queryType]:checked').val();
+	var csv;
+
+	if (queryType == "Experimental") {
+
+		csv = $('#experimentalQuery').table2CSV(
+				{
+					separator : '\t',
+
+					delivery : 'value',
+
+					header : [ 'Tissue Type', 'Cell Line', 'Drug1', 'Drug2',
+							'Assay Type', 'Synergy Measurement', 'Score',
+							'Score Error' ]
+
+				});
+	} else {
+		csv = $('#computationalQuery').table2CSV(
+				{
+					separator : '\t',
+
+					delivery : 'value',
+
+					header : [ 'Tissue Type', 'Cell Line', 'Drug1', 'Drug2',
+							'Similarity Algorithm', 'Score', 'P-value' ]
+
+				});
+	}
+
+	window.open('data:text/plain;charset=UTF-8,' + encodeURIComponent(csv));
+
+}
+
+function getLicenseData() {
+
+	$.ajax({
+		url : "license/",
+		dataType : "json",
+		contentType : "json",
+
+		success : function(data) {
+
+			$('#lincsLicense').html(data);
+		},
+
+		error : function(x) {
+			alert("error: " + x);
+		}
+	});
+
+}
+
+function agreeLicense() {
+
+	$.cookie("agreeLincsLicense", 1, {
+		expires : 20 * 365
+	});
+	window.close();
 }
