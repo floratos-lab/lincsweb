@@ -40,7 +40,7 @@
 <body>
 
     <br>
-	<div align="center" style="width:380px;height:235px;overflow:auto;"><p id="lincsLicense"></P></div>
+	<div align="left" style="width:340px;height:235px;overflow:auto;margin:0 auto;"><p id="lincsLicense"></P></div>
     <br>
 	</form>
 
