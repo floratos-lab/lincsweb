@@ -25,9 +25,8 @@ import org.lincsweb.util.Lincs;
 public class ListController {
 
 	private static final Log log = LogFactory.getLog(ListController.class);
-	
+
 	private final static String EXPERIMENTAL = "Experimental";
-	 
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(method = { RequestMethod.POST, RequestMethod.GET }, headers = "Accept=application/json")
@@ -35,7 +34,7 @@ public class ListController {
 			@RequestParam("queryType") String queryType,
 			@RequestParam("dataType") String dataType,
 			@RequestParam("selectedTissues") String selectedTissues,
-			@RequestParam("selectedCellLines") String selectedCellLines, 
+			@RequestParam("selectedCellLines") String selectedCellLines,
 			@RequestParam("selectedDrug1s") String selectedDrug1s) {
 
 		HttpHeaders headers = new HttpHeaders();
@@ -44,53 +43,52 @@ public class ListController {
 		List<String> selectedTissueList = null;
 		List<String> selectedCellLineList = null;
 		List<String> selectedDrug1List = null;
-        
-		if (selectedTissues != null && selectedTissues.length() > 0)
-		{
+
+		if (selectedTissues != null && selectedTissues.length() > 0) {
 			selectedTissueList = (List<String>) new JSONDeserializer()
-			.deserialize(selectedTissues);
+					.deserialize(selectedTissues);
 		}
-		
-		if (selectedCellLines != null && selectedCellLines.length() > 0)
-		{	
+
+		if (selectedCellLines != null && selectedCellLines.length() > 0) {
 			selectedCellLineList = (List<String>) new JSONDeserializer()
-			.deserialize(selectedCellLines);
+					.deserialize(selectedCellLines);
 		}
-		
-		if (selectedDrug1s != null && selectedDrug1s.length() > 0)
-		{	
+
+		if (selectedDrug1s != null && selectedDrug1s.length() > 0) {
 			selectedDrug1List = (List<String>) new JSONDeserializer()
-			.deserialize(selectedDrug1s);
+					.deserialize(selectedDrug1s);
 		}
 
 		Lincs lincs = Lincs.getInstance();
 
 		List<String> theList = null;
 		try {
-			if (dataType.equalsIgnoreCase("cellLine"))
-			{   theList = addAll(lincs
-					     .getAllCellLineNamesForTissueTypes(selectedTissueList));
-			}
-			else if (dataType.equalsIgnoreCase("drug1"))
-			{
-				if (queryType.equalsIgnoreCase(EXPERIMENTAL) )
-			         theList = addAll(lincs.getCompound1NamesFromExperimental(selectedTissueList, selectedCellLineList));
+			if (dataType.equalsIgnoreCase("cellLine")) {
+				theList = addAll(lincs
+						.getAllCellLineNamesForTissueTypes(selectedTissueList));
+			} else if (dataType.equalsIgnoreCase("drug1")) {
+				if (queryType.equalsIgnoreCase(EXPERIMENTAL))
+					theList = addAll(lincs.getCompound1NamesFromExperimental(
+							selectedTissueList, selectedCellLineList));
 				else
-					 theList = addAll(lincs.getCompound1NamesFromComputational(selectedTissueList, selectedCellLineList));
-			}
-			else if (dataType.equalsIgnoreCase("drug2"))
-			{
-				if (queryType.equalsIgnoreCase(EXPERIMENTAL) )
-			         theList = addAll(lincs.getCompound2NamesFromExperimental(selectedTissueList, selectedCellLineList, selectedDrug1List));
+					theList = addAll(lincs.getCompound1NamesFromComputational(
+							selectedTissueList, selectedCellLineList));
+			} else if (dataType.equalsIgnoreCase("drug2")) {
+				if (queryType.equalsIgnoreCase(EXPERIMENTAL))
+					theList = addAll(lincs.getCompound2NamesFromExperimental(
+							selectedTissueList, selectedCellLineList,
+							selectedDrug1List));
 				else
-					 theList = addAll(lincs.getCompound2NamesFromComputational(selectedTissueList, selectedCellLineList, selectedDrug1List));
+					theList = addAll(lincs.getCompound2NamesFromComputational(
+							selectedTissueList, selectedCellLineList,
+							selectedDrug1List));
 			}
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 		}
 
 		JSONSerializer jsonSerializer = new JSONSerializer().exclude("*.class");
-		 
+
 		return new ResponseEntity<String>(
 				jsonSerializer.deepSerialize(theList), headers, HttpStatus.OK);
 

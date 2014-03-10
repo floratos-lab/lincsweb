@@ -1,3 +1,4 @@
+var maxScore = 0;
 function queryTypeChange() {
 
 	checkQueryType();
@@ -85,6 +86,7 @@ function getLincsInfo() {
 	$('#tissueTypes').html('');
 	$('#cellLines').html('');
 	$('#drug1List').html('');
+	$('#textbox').val('');
 	$('#drug2List').html('');
 	$('#assayTypes').html('');
 	$('#synergyMeasurementTypes').html('');
@@ -173,6 +175,7 @@ function tissueTypesChange() {
 
 	$('#cellLines').html('');
 	$('#drug1List').html('');
+	$('#textbox').val('');
 	$('#drug2List').html('');
 
 	$.ajax({
@@ -228,6 +231,8 @@ function tissueTypesChange() {
 
 			});
 
+			$('#drug1List').filterByText($('#textbox'), true);
+
 		},
 
 		error : function(x) {
@@ -252,6 +257,7 @@ function cellLineChange() {
 	var queryType = $('input[name=queryType]:checked').val()
 
 	$('#drug1List').html('');
+	$('#textbox').val('');
 	$('#drug2List').html('');
 
 	$.ajax({
@@ -276,6 +282,7 @@ function cellLineChange() {
 										.text(aData));
 
 			});
+			$('#drug1List').filterByText($('#textbox'), true);
 
 		},
 
@@ -421,6 +428,8 @@ function getLincsQueryData() {
 		contentType : "json",
 
 		success : function(data) {
+			maxScore = 0;
+			var count = 0;
 			if (queryType == "Experimental") {
 				$('#experimentalQuery tbody').html('');
 				_.each(data, function(aData) {
@@ -437,14 +446,25 @@ function getLincsQueryData() {
 							+ aData.assayType + '</small></td>';
 					line += '<td style="width: 120px"  class="border"><small>'
 							+ aData.measurementType + '</small></td>';
-					line += '<td style="width: 120px"  class="border"><small>'
+					line += '<td id="score' + count
+							+ '" style="width: 120px"  class="border"><small>'
 							+ aData.score + '</small></td>';
 					line += '<td style="width: 120px"  class="border"><small>'
 							+ aData.scoreError + '</small></td>';
 					line = '<tr style="width: 120px"  class="border"><small>'
 							+ line + '</small></tr>';
 					$('#experimentalQuery tbody').append(line);
+
+					var scoreCellId = "#score" + count;
+					$(scoreCellId).val(aData.score);
+
+					var value = Math.abs(aData.score);
+
+					if (value > maxScore)
+						maxScore = value;
+					count = count + 1;
 				});
+
 			} else {
 				$('#computationalQuery tbody').html('');
 				_.each(data, function(aData) {
@@ -459,15 +479,26 @@ function getLincsQueryData() {
 							+ aData.compound2 + '</small></td>';
 					line += '<td style="width: 120px"  class="border"><small>'
 							+ aData.similarityAlgorithm + '</small></td>';
-					line += '<td style="width: 120px"  class="border"><small>'
+					line += '<td id="score' + count
+							+ '" style="width: 120px"  class="border"><small>'
 							+ aData.score + '</small></td>';
 					line += '<td style="width: 120px"  class="border"><small>'
 							+ aData.pvalue + '</small></td>';
 					line = '<tr style="width: 120px"  class="border"><small>'
 							+ line + '</small></tr>';
 					$('#computationalQuery tbody').append(line);
+					var scoreCellId = "#score" + count;
+					$(scoreCellId).val(aData.score);
+
+					var value = Math.abs(aData.score);
+
+					if (value > maxScore)
+						maxScore = value;
+					count = count + 1;
 				});
 			}
+
+			checkColor();
 
 		},
 
@@ -537,4 +568,45 @@ function agreeLicense() {
 		expires : 20 * 365
 	});
 	window.close();
+}
+
+function checkColor() {
+	var queryType = $('input[name=queryType]:checked').val();
+	var rowCount;
+	if (queryType == "Experimental")
+		rowCount = $('#experimentalQuery >tbody >tr').length;
+	else
+		rowCount = $('#computationalQuery >tbody >tr').length;
+	if ($('#checkboxColorgradient').is(":checked")) {
+		for ( var i = 0; i < rowCount; i++) {
+			var scoreCellId = "#score" + i;
+			var score = $(scoreCellId).val();
+			var color = getColor(score);
+			$(scoreCellId).css({
+				"background-color" : color
+			});
+
+		}
+	} else {
+		for ( var i = 0; i < rowCount; i++) {
+			var scoreCellId = "#score" + i;
+			$(scoreCellId).css({
+				"background-color" : '#f4f4f4'
+			});
+
+		}
+	}
+
+}
+
+function getColor(score) {
+
+	var colorindex = Math.floor(score * 255 / maxScore);
+	if (colorindex > 0)
+		return "rgb(" + colorindex + ", 0, 0)";
+	else {
+		colorindex = Math.abs(colorindex);
+		return "rgb(0, " + colorindex + ", 0)";
+	}
+
 }
