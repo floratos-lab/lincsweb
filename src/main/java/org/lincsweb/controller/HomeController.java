@@ -28,7 +28,7 @@ public class HomeController {
 	private static final Log log = LogFactory.getLog(HomeController.class);
  
 	private final static String EXPERIMENTAL = "Experimental";
-	private final static String COMPUTATIONAL = "Computational";
+ 
 	 
       @RequestMapping(method = { RequestMethod.POST, RequestMethod.GET }, headers = "Accept=application/json")
 		public ResponseEntity<String> getLincsInfo(@RequestParam("queryType") String queryType) {
@@ -94,7 +94,7 @@ public class HomeController {
 	// test
 		public static void main(String[] args) {
 
-			HomeController homeController = new HomeController();
+			//HomeController homeController = new HomeController();
 			 
 			 
 			 

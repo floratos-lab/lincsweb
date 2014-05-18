@@ -14,8 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
+ 
 import java.util.List;
 
 import org.lincsweb.util.Lincs;
@@ -103,7 +102,7 @@ public class ListController {
 	// test
 	public static void main(String[] args) {
 
-		ListController listController = new ListController();
+		//ListController listController = new ListController();
 
 	}
 
