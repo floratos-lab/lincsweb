@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+
+
+
 <head>
 <meta charset="utf-8">
 <title>Lincs Query</title>
@@ -9,146 +13,247 @@
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/lincs.css" rel="stylesheet">
-
+<link href="style.css" rel="stylesheet">
 
 </head>
 
 <body onload="initData();">
 
-	<form name="Demo" action="" method="post">
+	<div id="header-wrap">
+		<div id="header">
+			<h1>
+				<a>NIH LINCS Program</a>
+			</h1>
+			<span class="tagline"></span>
 
-		<br />
-		<table align="center">
-
-			<tr>
-				<td><small>Query Type:</small></td>
-
-				<td>&nbsp;&nbsp;&nbsp; <input type="radio" name="queryType"
-					value="Experimental" CHECKED="checked"
-					onchange="queryTypeChange();" /> &nbsp;&nbsp;<small>Experimental</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-					<input type="radio" name="queryType" value="Computational"
-					onchange="queryTypeChange();" /> &nbsp;&nbsp;<small>Computational</small>
-
-				</td>
-
-			</tr>
+			<div id="logo-nihlincs">
+				<a> <span>Library of Integrated Network-Based Cellular
+						Signatures</span>
+				</a>
+			</div>
 
 
-		</table>
-
-		<table align="center" style="width: 90%">
-			<tr>
-				<td />
-				<td />
-				<td align="left" valign="bottom"><small>Drug1: </small></td>
-			</tr>
-			<tr>
-				<td align="left"><small>Tissue Type </small></td>
-				<td align="left"><small>Cell Line </small></td>
-				<td align="left" valign="bottom"><input id="textbox"
-					type="text" style="width: 120px; height: 16px; font-size: 15px"
-					placeholder="Type to filter" /></td>
-				<td align="left"><small>Drug2 </small></td>
-				<td id="assayTypeText" align="left"><small>Assay Type </small></td>
-				<td id="synergyMeasurementText" align="left"><small>Synergy
-						Measurement</small></td>
-				<td id="similarityAlgorithmText" align="left"><small>Similarity
-						Algorithm</small></td>
-			</tr>
-
-
-			<tr>
-				<td><select id="tissueTypes" name="tissueTypes"
-					style="width: 150px" size="3" onchange="tissueTypesChange();"
-					multiple></select></td>
-				<td><select id="cellLines" name="cellLines"
-					style="width: 150px" size="3" onchange="cellLineChange();" multiple></select></td>
-				<td><select id="drug1List" name="drug1List"
-					style="width: 150px" size="3" onchange="drug1Change();" multiple></select></td>
-				<td><select id="drug2List" name="drug2List"
-					style="width: 150px" size="3" multiple></select></td>
-				<td id="assayTypesTd"><select id="assayTypes" name="assayTypes"
-					style="width: 150px" size="3" multiple></select></td>
-				<td id="synergyMeasurementTypesTd"><select
-					id="synergyMeasurementTypes" name="synergyMeasurememtTypes"
-					style="width: 150px" size="3" multiple></select></td>
-				<td id="similarityAlgorithmsTd"><select
-					id="similarityAlgorithms" name="similarityAlgorithms"
-					style="width: 150px" size="3" multiple></select></td>
-
-			</tr>
+		</div>
+	</div>
+	<!-- end header-wrap -->
 
 
 
-		</table>
-		<table align="center">
 
-			<tr>
-				<td valign="top"><input id="checkboxMaxResult" type="checkbox"
-					name="maxResult " /></td>
-				<td valign="top">&nbsp;<small>maxResult</small>&nbsp;
-				</td>
-				<td valign="top"><input id="textboxMaxResult" type="text"
-					style="width: 120px; height: 16px; font-size: 15px" value="10" />&nbsp;</td>
+	<div id="header1-wrap">
 
-				<td valign="top"><input type="button" value="search"
-					onclick="getLincsQueryData();" />&nbsp;</td>
-				<td valign="top"><input type="button" value="reset"
-					onclick="queryTypeChange();" />&nbsp;&nbsp;</td>
-				<td valign="top"><input type="button" value="export"
-					onclick="exportToCsv();" />&nbsp;&nbsp;</td>
-				<td valign="baseline"><input id="checkboxColorgradient"
-					onclick="checkColor();" type="checkbox" name="maxResult " />&nbsp;<small>Color
-						gradient for Score&nbsp;&nbsp;</td>
+		<div id="header1">
 
-			</tr>
-
-		</table>
-
-		<table class="sortable" id="experimentalQuery" align="center"
-			width="90%">
-			<thead>				 
-					<th align="left"><small>Tissue Type</small></th>
-					<th align="left"><small>Cell Line</small></th>
-					<th align="left"><small>Drug1</small></th>
-					<th align="left"><small>Drug2</small></th>
-					<th align="left"><small>Assay Type</small></th>
-					<th align="left"><small>Synergy Measurement</small></th>
-					<th align="left"><small>Score</small></th>
-					<th align="left"><small>Score Error</small></th>	 
+           
+					<div id="access">
+						<div class="menu-header">
+							<ul id="menu-top-menu" class="menu">
+								<li id="menu-item-13"
+									class="menu-item menu-item-type-post_type "><a
+									href="lincs_query_about.htm" >About</a></li>
+								<li id="menu-item-licence"
+									class="menu-item" onclick="getLincsLisenceWindow()"><a
+									>Terms of Use</a></li>
 
 
-			</thead>
-			<tbody></tbody>
+							</ul>
+						</div>
+					</div>
+           
 
-		</table>
+		</div>
+		<!-- end pagebody -->
 
-		<table  class="sortable" id="computationalQuery"
-			align="center" width="90%" style="display:none;">
-			<thead>
-				 
-					<th align="left"><small>Tissue Type</small></th>
-					<th align="left"><small>Cell Line</small></th>
-					<th align="left"><small>Drug1</small></th>
-					<th align="left"><small>Drug2</small></th>
-					<th align="left"><small>Similarity Algorithm</small></th>
-					<th align="left"><small>Score</small></th>
-					<th align="left"><small>P-value</small></th>
- 
-
-
-			</thead>
-			<tbody>
-			</tbody>
+	</div>
+	<!-- end pagebody-wrap -->
 
 
 
-		</table>
+
+	<div id="pagebody-wrap">
+
+		<div id="pagebody">
 
 
-	</form>
 
+			<form name="Lincs" action="" method="post">
+
+				<br />
+
+				<div id="query">
+
+
+					<table align="center">
+
+						<tr>
+							<td><small>Query Type:</small></td>
+
+							<td>&nbsp;&nbsp;&nbsp; <input type="radio" name="queryType"
+								value="Experimental" CHECKED="checked"
+								onchange="queryTypeChange();" /> &nbsp;&nbsp;<small>Experimental</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+								<input type="radio" name="queryType" value="Computational"
+								onchange="queryTypeChange();" /> &nbsp;&nbsp;<small>Computational</small>
+
+							</td>
+
+						</tr>
+
+
+					</table>
+
+					<table align="center" style="width: 90%">
+						<tr>
+							<td />
+							<td />
+							<td align="left" valign="bottom"><small>Drug1</small>&nbsp;<img id="drug1Icon" 
+								src="img/icon_info.gif" /></td>
+						</tr>
+						<tr>
+							<td align="left"><small>Tissue Type </small>&nbsp;<img id="tissueTypeIcon"
+								src="img/icon_info.gif" /></td>
+							<td align="left"><small>Cell Line </small>&nbsp;<img id="cellLineIcon"
+								src="img/icon_info.gif"  
+								 /></td>
+							<td align="left" valign="bottom"><input id="textbox"
+								type="text" style="width: 120px; height: 16px; font-size: 14px"
+								placeholder="Type to filter" /></td>
+							<td align="left"><small>Drug2 </small>&nbsp;<img id="drug2Icon"
+								src="img/icon_info.gif" /></td>
+							<td id="assayTypeText" align="left"><small>Assay
+									Type </small>&nbsp;<img id="assayTypeIcon" src="img/icon_info.gif" /></td>
+							<td id="synergyMeasurementText" align="left"><small>Synergy
+									Measurement</small></td>
+							<td id="synergyMeasurementIcon" align="left"><img
+								src="img/icon_info.gif" /></td>
+							<td id="similarityAlgorithmText" align="left"><small>Similarity
+									Algorithm</small>&nbsp;<img id="similarityAlgorithmIcon" src="img/icon_info.gif" /></td>
+
+						</tr>
+
+
+						<tr>
+							<td><select id="tissueTypes" name="tissueTypes"
+								style="width: 145px" size="3" onchange="tissueTypesChange();"
+								multiple></select></td>
+							<td><select id="cellLines" name="cellLines"
+								style="width: 145px" size="3" onchange="cellLineChange();"
+								multiple></select></td>
+							<td><select id="drug1List" name="drug1List"
+								style="width: 145px" size="3" onchange="drug1Change();" multiple></select></td>
+							<td><select id="drug2List" name="drug2List"
+								style="width: 145px" size="3" multiple></select></td>
+							<td id="assayTypesTd"><select id="assayTypes"
+								name="assayTypes" style="width: 145px" size="3" multiple></select></td>
+							<td id="synergyMeasurementTypesTd"><select
+								id="synergyMeasurementTypes" name="synergyMeasurememtTypes"
+								style="width: 145px" size="3" multiple></select></td>
+							<td id="similarityAlgorithmsTd"><select
+								id="similarityAlgorithms" name="similarityAlgorithms"
+								style="width: 145px" size="3" multiple></select></td>
+
+						</tr>
+
+
+
+					</table>
+
+
+					<table align="center">
+
+						<tr>
+							<td valign="top"><input id="checkboxMaxResult"
+								type="checkbox" name="maxResult " /></td>
+							<td valign="top">&nbsp;<small>maxResult</small>&nbsp;
+							</td>
+							<td valign="top"><input id="textboxMaxResult" type="text"
+								style="width: 120px; height: 16px; font-size: 15px" value="10" />&nbsp;</td>
+
+							<td valign="top"><input type="button" value="search"
+								onclick="getLincsQueryData();" />&nbsp;</td>
+							<td valign="top"><input type="button" value="reset"
+								onclick="queryTypeChange();" />&nbsp;&nbsp;</td>
+							<td valign="top"><input type="button" value="export"
+								onclick="exportToCsv();" />&nbsp;&nbsp;</td>
+							<td valign="baseline"><input id="checkboxColorgradient"
+								onclick="checkColor();" type="checkbox" name="maxResult " />&nbsp;<small>Color
+									gradient for Score&nbsp;&nbsp;</td>
+
+						</tr>
+
+					</table>
+
+				</div>
+				<!-- end query -->
+
+				<div id="content" class="result">
+
+
+					<table class="sortable" id="experimentalQuery" align="center"
+						width="90%">
+						<thead>
+							<th id="erTissueType" align="left"><small>Tissue Type</small></th>
+							<th id="erCellLine" align="left"><small>Cell Line</small></th>
+							<th id="erDrug1" align="left"><small>Drug1</small></th>
+							<th id="erDrug2" align="left"><small>Drug2</small></th>
+							<th id="erAssayType" align="left"><small>Assay Type</small></th>
+							<th id="erSynergyMeasurement" align="left"><small>Synergy Measurement</small></th>
+							<th id="erScore" align="left"><small>Score</small></th>
+							<th id="erScoreError" align="left"><small>Score Error</small></th>
+						</thead>
+						<tbody></tbody>
+
+					</table>
+
+					<table class="sortable" id="computationalQuery" align="center"
+						width="90%" style="display: none;">
+						<thead>
+
+							<th id="crTissueType" align="left"><small>Tissue Type</small></th>
+							<th id="crCellLine" align="left"><small>Cell Line</small></th>
+							<th id="crDrug1" align="left"><small>Drug1</small></th>
+							<th id="crDrug2" align="left"><small>Drug2</small></th>
+							<th id="crSimilarityAlgorithm" align="left"><small>Similarity Algorithm</small></th>
+							<th id="crScore" align="left"><small>Score</small></th>
+							<th id="crPvalue" align="left"><small>P-value</small></th>
+
+
+
+						</thead>
+						<tbody>
+						</tbody>
+
+
+
+					</table>
+
+				</div>
+				<!-- end content -->
+
+
+			</form>
+
+
+
+
+
+			<div class="clear-both"></div>
+			
+			
+		</div>
+		<!-- end pagebody -->
+
+	</div>
+	<!-- end pagebody-wrap -->
+
+			
+
+
+	<div id="footer-wrap">
+		<div id="footer">&copy;2014, Columbia University. All rights
+			reserved.</div>
+	</div>
+	<!-- end footer-wrap -->
 
 
 	<script src="js/underscore.js"></script>
@@ -158,7 +263,7 @@
 	<script src="js/sorttable.js"></script>
 	<script src="js/table2CSV.js"></script>
 	<script src="js/jquery.cookies.js"></script>
- 
+
 </body>
 
 </html>

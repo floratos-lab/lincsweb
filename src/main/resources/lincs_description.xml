@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This document is regarding the documentation for the search fields and 
+	the table column -->
+<project> LINCS
+<fields>
+<TissueType>The tissue from which the tested cell line was originally derived. More than one tissue can be chosen for a single query.</TissueType>
+<CellLine>The cell line tested in a particular experiment. More than one cell line can be chosen for a single query (multiple selection), subject to any constraint on "Tissue Type".</CellLine>
+<Drug1>Entries stored as "drug 1" in a pair, subject to previous choices of tissue type or cell line, if any. More than one drug can be chosen for a single query (multiple selection)</Drug1>
+<Drug2>Entries stored as "drug 2" in a pair, given current constraints on tissue type, cell line, and drug 1. More than one drug can be chosen for a single query (multiple selection)</Drug2>
+<AssayType>Viability, proliferation, apoptosis, cell morphology, oxidization state, etc.</AssayType>
+<SynergyMeasure>Excess over Bliss, Excess over highest single agent, Combination Index, etc.</SynergyMeasure>
+<SimilarityAlgorithm> This entry will combine the algorithm used with the similarity method used, e.g. GSEA-2, in the case where an algorithm has more than one possible measure.(MARINa (GSEA-2), IDEA, DEMAND, combined, etc.).</SimilarityAlgorithm>
+<Score>Score</Score>
+<ScoreError>Score Error</ScoreError>
+<Pvalue>P-Value</Pvalue>
+</fields>
+</project>

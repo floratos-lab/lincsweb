@@ -1,4 +1,6 @@
 var maxScore = 0;
+
+
 function queryTypeChange() {
 
 	checkQueryType();
@@ -16,9 +18,10 @@ function checkQueryType() {
 		$('#assayTypesTd').show();
 		$('#synergyMeasurementText').show();
 		$('#synergyMeasurementTypesTd').show();
+		$('#synergyMeasurementIcon').show();
 		$('#experimentalQuery').show();
 		$('#similarityAlgorithmText').hide();
-		$('#similarityAlgorithmsTd').hide();
+		$('#similarityAlgorithmsTd').hide();		
 		$('#computationalQuery').hide();
 
 	} else {
@@ -27,9 +30,10 @@ function checkQueryType() {
 		$('#assayTypesTd').hide();
 		$('#synergyMeasurementText').hide();
 		$('#synergyMeasurementTypesTd').hide();
+		$('#synergyMeasurementIcon').hide();
 		$('#experimentalQuery').hide();
 		$('#similarityAlgorithmText').show();
-		$('#similarityAlgorithmsTd').show();
+		$('#similarityAlgorithmsTd').show();		 
 		$('#computationalQuery').show();
 
 	}
@@ -77,7 +81,7 @@ function initData() {
 
 	checkQueryType();
 	getLincsInfo();
-
+	 
 }
 
 function getLincsInfo() {
@@ -161,7 +165,7 @@ function getLincsInfo() {
 			alert("error: " + x);
 		}
 	});
-
+ 
 }
 
 function tissueTypesChange() {
@@ -349,7 +353,7 @@ function getLincsQueryData() {
 	var cookieValue = $.cookie("agreeLincsLicense");
 	if (cookieValue != 1) {
 		var w = 380;
-		var h = 310;
+		var h = 330;
 		var left = Number((screen.width / 2) - (w / 2));
 		var tops = Number((screen.height / 2) - (h / 2));
 		var childWindow = window.open('license.jsp', 'win2',
@@ -590,9 +594,16 @@ function checkColor() {
 	} else {
 		for ( var i = 0; i < rowCount; i++) {
 			var scoreCellId = "#score" + i;
-			$(scoreCellId).css({
-				"background-color" : '#f4f4f4'
-			});
+			if (i % 2 == 1)
+			{$(scoreCellId).css({
+				//"background-color" : '#f4f4f4'  #F3F4E8
+				"background-color" : '#F3F4E8'
+			});}
+			else
+			{$(scoreCellId).css({
+				//"background-color" : '#f4f4f4'  #F3F4E8
+				"background-color" : '#fff'
+			});}
 
 		}
 	}
@@ -610,3 +621,64 @@ function getColor(score) {
 	}
 
 }
+
+
+function getLincsLisenceWindow() {
+	 
+		var w = 380;
+		var h = 330;
+		var left = Number((screen.width / 2) - (w / 2));
+		var tops = Number((screen.height / 2) - (h / 2));
+		var childWindow = window.open('license.jsp', 'win2',
+				'resizable=yes, width=' + w + ', height=' + h + ', top=' + tops
+						+ ', left=' + left);
+		return false;
+ 
+}
+
+
+$( document ).ready(function() {
+	$.ajax({
+		url : "field/",
+		dataType : "json",
+		contentType : "json",
+
+		success : function(data) {
+			 
+			$('#tissueTypeIcon').attr('title', data.tissueType);
+			$('#cellLineIcon').attr('title', data.cellLine);
+			$('#drug1Icon').attr('title', data.drug1);
+			$('#drug2Icon').attr('title', data.drug2);
+			$('#assayTypeIcon').attr('title', data.assayType);
+			$('#synergyMeasurementIcon').attr('title', data.synergyMeasure);
+			$('#similarityAlgorithmIcon').attr('title', data.similarityAlgorithm);
+			
+			$('#erTissueType').attr('title', data.tissueType);
+			$('#erCellLine').attr('title', data.cellLine);
+			$('#erDrug1').attr('title', data.drug1);
+			$('#erDrug2').attr('title', data.drug2);
+			$('#erAssayType').attr('title', data.assayType);
+			$('#erSynergyMeasurement').attr('title', data.synergyMeasure);
+			$('#erScore').attr('title', data.score);
+			$('#erScoreError').attr('title', data.scoreError);
+			
+			$('#crTissueType').attr('title', data.tissueType);
+			$('#crCellLine').attr('title', data.cellLine);
+			$('#crDrug1').attr('title', data.drug1);
+			$('#crDrug2').attr('title', data.drug2);		 
+			$('#crSimilarityAlgorithm').attr('title', data.similarityAlgorithm);
+			$('#crScore').attr('title', data.score);
+			$('#crPvalue').attr('title', data.pvalue);
+		},
+
+		error : function(x) {
+			alert("error: " + x);
+		}
+	});
+
+
+
+
+});
+
+
