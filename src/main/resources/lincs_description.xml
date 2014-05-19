@@ -10,8 +10,8 @@
 <AssayType>Viability, proliferation, apoptosis, cell morphology, oxidization state, etc.</AssayType>
 <SynergyMeasure>Excess over Bliss, Excess over highest single agent, Combination Index, etc.</SynergyMeasure>
 <SimilarityAlgorithm> This entry will combine the algorithm used with the similarity method used, e.g. GSEA-2, in the case where an algorithm has more than one possible measure.(MARINa (GSEA-2), IDEA, DEMAND, combined, etc.).</SimilarityAlgorithm>
-<Score>Score</Score>
+<Score>Score - The score is specific to the particular measure chosen</Score>
 <ScoreError>Score Error</ScoreError>
-<Pvalue>P-Value</Pvalue>
+<Pvalue>P-Value for score</Pvalue>
 </fields>
 </project>
