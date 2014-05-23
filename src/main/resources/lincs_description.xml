@@ -11,7 +11,7 @@
 <SynergyMeasure>Excess over Bliss, Excess over highest single agent, Combination Index, etc.</SynergyMeasure>
 <SimilarityAlgorithm> This entry will combine the algorithm used with the similarity method used, e.g. GSEA-2, in the case where an algorithm has more than one possible measure.(MARINa (GSEA-2), IDEA, DEMAND, combined, etc.).</SimilarityAlgorithm>
 <Score>Score - The score is specific to the particular measure chosen</Score>
-<ScoreError>Score Error</ScoreError>
+<ScoreError>For scores of type Excess-over-Bliss, Error = sqrt [ (ObservedComb_SEM * 100)^2 + (PredictedComb_SEM*100)^2 ]</ScoreError>
 <Pvalue>P-Value for score</Pvalue>
 </fields>
 </project>
