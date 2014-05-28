@@ -352,15 +352,8 @@ function drug1Change() {
 function getLincsQueryData() {
 	var cookieValue = $.cookie("agreeLincsLicense");
 	if (cookieValue != 1) {
-		var w = 380;
-		var h = 330;
-		var left = Number((screen.width / 2) - (w / 2));
-		var tops = Number((screen.height / 2) - (h / 2));
-		var childWindow = window.open('license.jsp', 'win2',
-				'resizable=yes, width=' + w + ', height=' + h + ', top=' + tops
-						+ ', left=' + left);
+		getLincsLisenceWindow();
 		return false;
-
 	}
 	var queryType = $('input[name=queryType]:checked').val();
 
@@ -629,12 +622,26 @@ function getLincsLisenceWindow() {
 		var h = 330;
 		var left = Number((screen.width / 2) - (w / 2));
 		var tops = Number((screen.height / 2) - (h / 2));
-		var childWindow = window.open('license.jsp', 'win2',
-				'resizable=yes, width=' + w + ', height=' + h + ', top=' + tops
+		var childWindow = window.open('lincs_license.html', 'mywindow',
+				'scrollbars=yes,  resizable=yes, width=' + w + ', height=' + h + ', top=' + tops
 						+ ', left=' + left);
-		return false;
+		
  
 }
+
+function getTermWindow() {
+	 
+	var w = 400;
+	var h = 328;
+	var left = Number((screen.width / 2) - (w / 2));
+	var tops = Number((screen.height / 2) - (h / 2));
+	var childWindow = window.open('term.html', 'mywindow',
+			'scrollbars=yes, resizable=yes, width=' + w + ', height=' + h + ', top=' + tops
+					+ ', left=' + left);
+	return false;
+
+}
+
 
 
 $( document ).ready(function() {

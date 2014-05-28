@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+<meta charset="utf-8">
+<title>Lincs Query License</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/term.css" rel="stylesheet">
+ 
+
+<script>
+   
+    window.onload = function() {    
+    
+       
+		$.ajax({
+			url : "license/",			 
+			dataType : "json",
+			contentType : "json",
+
+			success : function(data) {
+                
+				$('#lincsLicense').html(data);
+				$('#okButton').show();
+			},
+
+			error : function(x) {
+				alert("error: " + x);
+			}
+		});    
+	
+}
+
+
+   
+   </script>
+
+
+</head>
+
+<body class="aboutPageWideContainer">
+ 
+
+    <br>
+	 	<div id="lincsLicense"><p></P></div> 
+    <br>
+	<table align="center">
+
+		<tr>
+
+		 
+			<td valign="bottom"><input id="okButton" type="button" value="ok"
+				onclick="window.close();" style="display: none;"/>&nbsp;&nbsp;</td> 
+
+		</tr>
+
+	</table>
+
+     <br>
+      
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/lincs.js"></script>
+
+	<script src="js/jquery.cookies.js"></script>
+
+
+</body>
+
+
+
+
+
+
+</html>
