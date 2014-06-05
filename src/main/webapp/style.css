@@ -1075,10 +1075,24 @@ img.commonfund {
 
 }
 
- 
+  
+ #progress_indicator{
+	
+	font-size: 12px;  	
+	
+	color: grey;
+	
+	width: 270px;
 
-/* --- Footer ---- */
+	height:24px;	 
 
+	position:absolute;
+
+	top: -20px;
+
+	left: 350px;
+
+}
 
 
 #footer-wrap {

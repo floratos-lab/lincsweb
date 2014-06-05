@@ -1,6 +1,5 @@
 var maxScore = 0;
 
-
 function queryTypeChange() {
 
 	checkQueryType();
@@ -21,7 +20,7 @@ function checkQueryType() {
 		$('#synergyMeasurementIcon').show();
 		$('#experimentalQuery').show();
 		$('#similarityAlgorithmText').hide();
-		$('#similarityAlgorithmsTd').hide();		
+		$('#similarityAlgorithmsTd').hide();
 		$('#computationalQuery').hide();
 
 	} else {
@@ -33,7 +32,7 @@ function checkQueryType() {
 		$('#synergyMeasurementIcon').hide();
 		$('#experimentalQuery').hide();
 		$('#similarityAlgorithmText').show();
-		$('#similarityAlgorithmsTd').show();		 
+		$('#similarityAlgorithmsTd').show();
 		$('#computationalQuery').show();
 
 	}
@@ -69,10 +68,11 @@ jQuery.fn.filterByText = function(textbox, selectSingleMatch) {
 											option.value));
 						}
 					});
-					if (selectSingleMatch === true
-							&& $(select).children().length === 1) {
-						$(select).children().get(0).selected = true;
-					}
+					/*
+					 * if (selectSingleMatch === true &&
+					 * $(select).children().length === 1) {
+					 * $(select).children().get(0).selected = false; }
+					 */
 				});
 	});
 };
@@ -81,7 +81,7 @@ function initData() {
 
 	checkQueryType();
 	getLincsInfo();
-	 
+
 }
 
 function getLincsInfo() {
@@ -165,7 +165,7 @@ function getLincsInfo() {
 			alert("error: " + x);
 		}
 	});
- 
+
 }
 
 function tissueTypesChange() {
@@ -182,36 +182,37 @@ function tissueTypesChange() {
 	$('#textbox').val('');
 	$('#drug2List').html('');
 
-	$.ajax({
+	if (tissueTypes.length > 0) {
+		$.ajax({
 
-		url : "list/",
-		data : {
-			queryType : queryType,
-			dataType : "cellLine",
-			selectedTissues : JSON.stringify(tissueTypes),
-			selectedCellLines : "",
-			selectedDrug1s : ""
-		},
-		dataType : "json",
-		contentType : "json",
+			url : "list/",
+			data : {
+				queryType : queryType,
+				dataType : "cellLine",
+				selectedTissues : JSON.stringify(tissueTypes),
+				selectedCellLines : "",
+				selectedDrug1s : ""
+			},
+			dataType : "json",
+			contentType : "json",
 
-		success : function(data) {
+			success : function(data) {
 
-			_.each(data, function(aData) {
-				$('#cellLines')
-						.append(
-								$("<option></option>").attr("value", aData)
-										.text(aData));
+				_.each(data, function(aData) {
+					$('#cellLines').append(
+							$("<option></option>").attr("value", aData).text(
+									aData));
 
-			});
+				});
 
-		},
+			},
 
-		error : function(x) {
-			alert("error: " + x);
-		}
-	});
+			error : function(x) {
+				alert("error: " + x);
+			}
+		});
 
+	}
 	$.ajax({
 
 		url : "list/",
@@ -317,7 +318,9 @@ function drug1Change() {
 	var queryType = $('input[name=queryType]:checked').val()
 
 	$('#drug2List').html('');
-	$.ajax({
+	
+	if ( drug1s.length > 0 )
+	{$.ajax({
 
 		url : "list/",
 		data : {
@@ -346,6 +349,8 @@ function drug1Change() {
 			alert("error: " + x);
 		}
 	});
+	
+	}
 
 }
 
@@ -406,6 +411,8 @@ function getLincsQueryData() {
 		}
 	}
 
+	$('#progress_indicator').show();
+
 	$.ajax({
 
 		url : "lincs/",
@@ -427,6 +434,7 @@ function getLincsQueryData() {
 		success : function(data) {
 			maxScore = 0;
 			var count = 0;
+			$('#progress_indicator').hide();
 			if (queryType == "Experimental") {
 				$('#experimentalQuery tbody').html('');
 				_.each(data, function(aData) {
@@ -500,6 +508,7 @@ function getLincsQueryData() {
 		},
 
 		error : function(x) {
+			$('#progress_indicator').hide();
 			alert("error: " + x);
 		}
 	});
@@ -587,16 +596,17 @@ function checkColor() {
 	} else {
 		for ( var i = 0; i < rowCount; i++) {
 			var scoreCellId = "#score" + i;
-			if (i % 2 == 1)
-			{$(scoreCellId).css({
-				//"background-color" : '#f4f4f4'  #F3F4E8
-				"background-color" : '#F3F4E8'
-			});}
-			else
-			{$(scoreCellId).css({
-				//"background-color" : '#f4f4f4'  #F3F4E8
-				"background-color" : '#fff'
-			});}
+			if (i % 2 == 1) {
+				$(scoreCellId).css({
+					// "background-color" : '#f4f4f4' #F3F4E8
+					"background-color" : '#F3F4E8'
+				});
+			} else {
+				$(scoreCellId).css({
+					// "background-color" : '#f4f4f4' #F3F4E8
+					"background-color" : '#fff'
+				});
+			}
 
 		}
 	}
@@ -615,77 +625,73 @@ function getColor(score) {
 
 }
 
-
 function getLincsLisenceWindow() {
-	 
-		var w = 380;
-		var h = 330;
-		var left = Number((screen.width / 2) - (w / 2));
-		var tops = Number((screen.height / 2) - (h / 2));
-		var childWindow = window.open('lincs_license.html', 'mywindow',
-				'scrollbars=yes,  resizable=yes, width=' + w + ', height=' + h + ', top=' + tops
-						+ ', left=' + left);
-		
- 
+
+	var w = 380;
+	var h = 330;
+	var left = Number((screen.width / 2) - (w / 2));
+	var tops = Number((screen.height / 2) - (h / 2));
+	var childWindow = window.open('lincs_license.html', 'mywindow',
+			'scrollbars=yes,  resizable=yes, width=' + w + ', height=' + h
+					+ ', top=' + tops + ', left=' + left);
+
 }
 
 function getTermWindow() {
-	 
+
 	var w = 400;
 	var h = 328;
 	var left = Number((screen.width / 2) - (w / 2));
 	var tops = Number((screen.height / 2) - (h / 2));
 	var childWindow = window.open('term.html', 'mywindow',
-			'scrollbars=yes, resizable=yes, width=' + w + ', height=' + h + ', top=' + tops
-					+ ', left=' + left);
+			'scrollbars=yes, resizable=yes, width=' + w + ', height=' + h
+					+ ', top=' + tops + ', left=' + left);
 	return false;
 
 }
 
+$(document).ready(
+		function() {
+			$.ajax({
+				url : "field/",
+				dataType : "json",
+				contentType : "json",
 
+				success : function(data) {
 
-$( document ).ready(function() {
-	$.ajax({
-		url : "field/",
-		dataType : "json",
-		contentType : "json",
+					$('#tissueTypeIcon').attr('title', data.tissueType);
+					$('#cellLineIcon').attr('title', data.cellLine);
+					$('#drug1Icon').attr('title', data.drug1);
+					$('#drug2Icon').attr('title', data.drug2);
+					$('#assayTypeIcon').attr('title', data.assayType);
+					$('#synergyMeasurementIcon').attr('title',
+							data.synergyMeasure);
+					$('#similarityAlgorithmIcon').attr('title',
+							data.similarityAlgorithm);
 
-		success : function(data) {
-			 
-			$('#tissueTypeIcon').attr('title', data.tissueType);
-			$('#cellLineIcon').attr('title', data.cellLine);
-			$('#drug1Icon').attr('title', data.drug1);
-			$('#drug2Icon').attr('title', data.drug2);
-			$('#assayTypeIcon').attr('title', data.assayType);
-			$('#synergyMeasurementIcon').attr('title', data.synergyMeasure);
-			$('#similarityAlgorithmIcon').attr('title', data.similarityAlgorithm);
-			
-			$('#erTissueType').attr('title', data.tissueType);
-			$('#erCellLine').attr('title', data.cellLine);
-			$('#erDrug1').attr('title', data.drug1);
-			$('#erDrug2').attr('title', data.drug2);
-			$('#erAssayType').attr('title', data.assayType);
-			$('#erSynergyMeasurement').attr('title', data.synergyMeasure);
-			$('#erScore').attr('title', data.score);
-			$('#erScoreError').attr('title', data.scoreError);
-			
-			$('#crTissueType').attr('title', data.tissueType);
-			$('#crCellLine').attr('title', data.cellLine);
-			$('#crDrug1').attr('title', data.drug1);
-			$('#crDrug2').attr('title', data.drug2);		 
-			$('#crSimilarityAlgorithm').attr('title', data.similarityAlgorithm);
-			$('#crScore').attr('title', data.score);
-			$('#crPvalue').attr('title', data.pvalue);
-		},
+					$('#erTissueType').attr('title', data.tissueType);
+					$('#erCellLine').attr('title', data.cellLine);
+					$('#erDrug1').attr('title', data.drug1);
+					$('#erDrug2').attr('title', data.drug2);
+					$('#erAssayType').attr('title', data.assayType);
+					$('#erSynergyMeasurement').attr('title',
+							data.synergyMeasure);
+					$('#erScore').attr('title', data.score);
+					$('#erScoreError').attr('title', data.scoreError);
 
-		error : function(x) {
-			alert("error: " + x);
-		}
-	});
+					$('#crTissueType').attr('title', data.tissueType);
+					$('#crCellLine').attr('title', data.cellLine);
+					$('#crDrug1').attr('title', data.drug1);
+					$('#crDrug2').attr('title', data.drug2);
+					$('#crSimilarityAlgorithm').attr('title',
+							data.similarityAlgorithm);
+					$('#crScore').attr('title', data.score);
+					$('#crPvalue').attr('title', data.pvalue);
+				},
 
+				error : function(x) {
+					alert("error: " + x);
+				}
+			});
 
-
-
-});
-
-
+		});
